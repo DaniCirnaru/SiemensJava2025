@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class ItemService {
+    private static ExecutorService executor = Executors.newFixedThreadPool(10);
     @Autowired
     private ItemRepository itemRepository;
-    private static ExecutorService executor = Executors.newFixedThreadPool(10);
     private List<Item> processedItems = new ArrayList<>();
     private int processedCount = 0;
 
@@ -48,7 +50,7 @@ public class ItemService {
      * Correct use of Spring's @Async annotation
      * Add appropriate comments explaining your changes and why they fix the issues
      * Write a brief explanation of what was wrong with the original implementation
-     *
+     * <p>
      * Hints
      * Consider how CompletableFuture composition can help coordinate multiple async operations
      * Think about appropriate thread-safe collections
