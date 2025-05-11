@@ -24,13 +24,13 @@ import java.util.concurrent.CompletableFuture;
  * - Incorrect use of @Async: method signature did not return Future or CompletableFuture.
  * Changes:
  * 1. Method signature changed to return CompletableFuture<List<Item>>, so Spring
- *    recognizes and handles it as an async operation.
+ * recognizes and handles it as an async operation.
  * 2. Injected Spring's AsyncTaskExecutor instead of manual ExecutorService.
  * 3. Local thread-safe list (Collections.synchronizedList) to collect processed items.
  * 4. Composed individual CompletableFutures and used CompletableFuture.allOf to wait
- *    for all tasks before completing the returned future.
+ * for all tasks before completing the returned future.
  * 5. Exceptions during processing now cause the CompletableFuture to complete exceptionally,
- *    ensuring errors are propagated to the caller.
+ * ensuring errors are propagated to the caller.
  */
 @Service
 public class ItemService {
@@ -40,6 +40,7 @@ public class ItemService {
 
     @Autowired
     private AsyncTaskExecutor taskExecutor;
+
     public List<Item> findAll() {
         return itemRepository.findAll();
     }
@@ -60,7 +61,7 @@ public class ItemService {
      * Asynchronously processes all items and returns a CompletableFuture
      * that completes when all items have been processed.
      *
-     * @return CompletableFuture<List<Item>> containing all processed items
+     * @return CompletableFuture<List < Item>> containing all processed items
      */
     @Async
     public CompletableFuture<List<Item>> processItemsAsync() {
